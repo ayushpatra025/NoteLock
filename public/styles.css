@@ -1,0 +1,206 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+    text-align: center;
+}
+
+header {
+    background-color: #4CAF50;
+    color: white;
+    font-style: serif;
+    font-weight: bold;
+}
+
+h1 {
+    margin: 0;
+}
+
+
+textarea {
+    width: 80%;
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    height: 150px; /* Increased height for a bigger note box */
+}
+
+
+/* Button Styling */
+button {
+    padding: 0.4rem 1rem;
+    margin: 0.5rem;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 1rem;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Hidden class for showing/hiding elements */
+.hidden {
+    display: none;
+}
+
+/* List Styling */
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+li button {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 0.3rem 0.5rem;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+/* Align the password label and input */
+.password-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0.5rem 0;
+    width: 80%;
+    box-sizing: border-box;
+}
+
+.password-container label {
+    font-size: 1rem;
+    margin-right: 10px;
+    width: 30%;
+    text-align: left;
+}
+
+.password-container input {
+    width: 65%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+/* Save Password Button */
+#save-password {
+    padding: 0.3rem 0.8rem;
+    margin-top: 1rem;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 0.9rem;
+}
+
+#save-password:hover {
+    background-color: #45a049;
+}
+
+/* Password Show/Hide Button */
+li button.show-hide {
+    background-color: #ff9800;
+    color: white;
+    padding: 0.3rem 0.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+li button.show-hide:hover {
+    background-color: #e68900;
+}
+
+/* Aligning the Notes Section */
+#notes-section {
+    margin-top: 2rem;
+}
+
+/* Aligning the Passwords Section */
+#passwords-section {
+    margin-top: 2rem;
+}
+
+/* Save Note Section */
+#save-note {
+    padding: 0.3rem 0.8rem;
+    margin-top: 1rem;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 0.9rem;
+}
+
+#save-note:hover {
+    background-color: #45a049;
+}
+
+/* Aligning the Save Note and Save Password Buttons */
+#save-note, #save-password {
+    display: block;
+    width: 40%;
+    margin: 1rem auto;
+    font-size: 0.9rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 3px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    /* Password container for smaller screens */
+    .password-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .password-container label {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+
+    .password-container input {
+        width: 100%;
+    }
+
+    /* Save Note and Save Password buttons */
+    #save-note, #save-password {
+        width: 100%;
+    }
+
+    /* Notes Section for smaller screens */
+    #notes-section {
+        margin-top: 1rem;
+    }
+
+    /* Passwords Section for smaller screens */
+    #passwords-section {
+        margin-top: 1rem;
+    }
+}
