@@ -204,3 +204,50 @@ li button.show-hide:hover {
         margin-top: 1rem;
     }
 }
+
+/* Styling for the Authentication Section */
+#auth-section {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    width: 90%;
+    max-width: 400px;
+    margin: 2rem auto;
+}
+
+#auth-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #4CAF50;
+}
+
+#auth-section input {
+    width: calc(100% - 2rem);
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+#auth-section button {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#auth-section button:hover {
+    background-color: #45a049;
+}
+
+#auth-section div {
+    margin-bottom: 1rem;
+}

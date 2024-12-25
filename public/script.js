@@ -26,42 +26,62 @@ document.addEventListener('DOMContentLoaded', () => {
     toggleSections(!!userId);
 
     // Register User
-    registerBtn.addEventListener('click', async () => {
-        const username = document.getElementById('register-username').value;
-        const password = document.getElementById('register-password').value;
+registerBtn.addEventListener('click', async () => {
+    const username = document.getElementById('register-username').value.trim();
+    const password = document.getElementById('register-password').value.trim();
 
-        try {
-            const response = await fetch(`${API_BASE_URL}/register`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, password }),
-            });
-            const data = await response.json();
-            localStorage.setItem('userId', data.userId);
-            toggleSections(true);
-        } catch (err) {
-            alert('Registration failed. Try again.');
+    if (!username || !password) {
+        alert('Please enter both username and password.');
+        return;
+    }
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/register`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password }),
+        });
+
+        if (!response.ok) {
+            throw new Error('Registration failed');
         }
-    });
 
-    // Login User
-    loginBtn.addEventListener('click', async () => {
-        const username = document.getElementById('login-username').value;
-        const password = document.getElementById('login-password').value;
+        const data = await response.json();
+        localStorage.setItem('userId', data.userId);
+        toggleSections(true);
+    } catch (err) {
+        alert('Registration failed. Please try again.');
+    }
+});
 
-        try {
-            const response = await fetch(`${API_BASE_URL}/login`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, password }),
-            });
-            const data = await response.json();
-            localStorage.setItem('userId', data.userId);
-            toggleSections(true);
-        } catch (err) {
-            alert('Login failed. Try again.');
+// Login User
+loginBtn.addEventListener('click', async () => {
+    const username = document.getElementById('login-username').value.trim();
+    const password = document.getElementById('login-password').value.trim();
+
+    if (!username || !password) {
+        alert('Please enter both username and password.');
+        return;
+    }
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password }),
+        });
+
+        if (!response.ok) {
+            throw new Error('Login failed');
         }
-    });
+
+        const data = await response.json();
+        localStorage.setItem('userId', data.userId);
+        toggleSections(true);
+    } catch (err) {
+        alert('Login failed. Please check your credentials and try again.');
+    }
+});
 
     // Fetch Notes
     const fetchNotes = async () => {
