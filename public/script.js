@@ -26,67 +26,47 @@ document.addEventListener('DOMContentLoaded', () => {
     toggleSections(!!userId);
 
     // Register User
-registerBtn.addEventListener('click', async () => {
-    const username = document.getElementById('register-username').value.trim();
-    const password = document.getElementById('register-password').value.trim();
+    registerBtn.addEventListener('click', async () => {
+        const username = document.getElementById('register-username').value;
+        const password = document.getElementById('register-password').value;
 
-    if (!username || !password) {
-        alert('Please enter both username and password.');
-        return;
-    }
-
-    try {
-        const response = await fetch(`${API_BASE_URL}/register`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, password }),
-        });
-
-        if (!response.ok) {
-            throw new Error('Registration failed');
+        try {
+            const response = await fetch(${API_BASE_URL}/register, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password }),
+            });
+            const data = await response.json();
+            localStorage.setItem('userId', data.userId);
+            toggleSections(true);
+        } catch (err) {
+            alert('Registration failed. Try again.');
         }
+    });
 
-        const data = await response.json();
-        localStorage.setItem('userId', data.userId);
-        toggleSections(true);
-    } catch (err) {
-        alert('Registration failed. Please try again.');
-    }
-});
+    // Login User
+    loginBtn.addEventListener('click', async () => {
+        const username = document.getElementById('login-username').value;
+        const password = document.getElementById('login-password').value;
 
-// Login User
-loginBtn.addEventListener('click', async () => {
-    const username = document.getElementById('login-username').value.trim();
-    const password = document.getElementById('login-password').value.trim();
-
-    if (!username || !password) {
-        alert('Please enter both username and password.');
-        return;
-    }
-
-    try {
-        const response = await fetch(`${API_BASE_URL}/login`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, password }),
-        });
-
-        if (!response.ok) {
-            throw new Error('Login failed');
+        try {
+            const response = await fetch(${API_BASE_URL}/login, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password }),
+            });
+            const data = await response.json();
+            localStorage.setItem('userId', data.userId);
+            toggleSections(true);
+        } catch (err) {
+            alert('Login failed. Try again.');
         }
-
-        const data = await response.json();
-        localStorage.setItem('userId', data.userId);
-        toggleSections(true);
-    } catch (err) {
-        alert('Login failed. Please check your credentials and try again.');
-    }
-});
+    });
 
     // Fetch Notes
     const fetchNotes = async () => {
         const userId = localStorage.getItem('userId');
-        const response = await fetch(`${API_BASE_URL}/notes/${userId}`);
+        const response = await fetch(${API_BASE_URL}/notes/${userId});
         const notes = await response.json();
 
         notesList.innerHTML = '';
@@ -107,7 +87,7 @@ loginBtn.addEventListener('click', async () => {
     // Delete Note
     const deleteNote = async (noteId) => {
         try {
-            await fetch(`${API_BASE_URL}/notes/${noteId}`, {
+            await fetch(${API_BASE_URL}/notes/${noteId}, {
                 method: 'DELETE',
             });
         } catch (err) {
@@ -125,7 +105,7 @@ loginBtn.addEventListener('click', async () => {
         }
 
         try {
-            await fetch(`${API_BASE_URL}/notes`, {
+            await fetch(${API_BASE_URL}/notes, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ userId, content: noteInput }),
@@ -140,7 +120,7 @@ loginBtn.addEventListener('click', async () => {
     // Fetch Passwords
     const fetchPasswords = async () => {
         const userId = localStorage.getItem('userId');
-        const response = await fetch(`${API_BASE_URL}/passwords/${userId}`);
+        const response = await fetch(${API_BASE_URL}/passwords/${userId});
         const passwords = await response.json();
 
         passwordsList.innerHTML = '';
@@ -149,7 +129,7 @@ loginBtn.addEventListener('click', async () => {
             
             // Create password label and input field
             const passwordLabel = document.createElement('span');
-            passwordLabel.textContent = `${password.label}: `;
+            passwordLabel.textContent = ${password.label}: ;
             
             const passwordInput = document.createElement('input');
             passwordInput.type = 'password'; // Default to password type
@@ -195,7 +175,7 @@ loginBtn.addEventListener('click', async () => {
     // Delete Password
     const deletePassword = async (passwordId) => {
         try {
-            await fetch(`${API_BASE_URL}/passwords/${passwordId}`, {
+            await fetch(${API_BASE_URL}/passwords/${passwordId}, {
                 method: 'DELETE',
             });
         } catch (err) {
@@ -214,7 +194,7 @@ loginBtn.addEventListener('click', async () => {
         }
 
         try {
-            await fetch(`${API_BASE_URL}/passwords`, {
+            await fetch(${API_BASE_URL}/passwords, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ userId, label, password: passwordInput }),
