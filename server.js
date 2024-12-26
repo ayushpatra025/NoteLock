@@ -1,7 +1,20 @@
 const express = require('express');
 const path = require('path');
+const bcrypt = require('bcrypt'); // Import bcrypt for password hashing
+const { v4: uuidv4 } = require('uuid'); // Import uuid for unique IDs
+const cors = require('cors'); // Import cors
 
 const app = express();
+
+// Enable CORS for specific origin (localhost:5500)
+const corsOptions = {
+    origin: 'http://127.0.0.1:5500', // Allow requests from this origin
+    methods: ['GET', 'POST', 'DELETE'], // Allow specific methods
+    allowedHeaders: ['Content-Type'], // Allow specific headers
+};
+
+app.use(cors(corsOptions)); // Apply CORS middleware
+
 app.use(express.json());
 
 // Serve static files (HTML, CSS, JS)
@@ -13,18 +26,50 @@ let notes = [];
 let passwords = [];
 
 // Routes
-app.post('/register', (req, res) => {
+app.post('/validate-user', (req, res) => {
+    const { userId } = req.body;
+    const user = users.find(u => u.userId === userId);
+    if (!user) {
+        return res.status(401).json({ message: 'Invalid user ID' });
+    }
+    res.status(200).json({ message: 'User validated' });
+});
+
+// Register User
+app.post('/register', async (req, res) => {
     const { username, password } = req.body;
-    const userId = Date.now().toString();
-    users.push({ userId, username, password });
+
+    // Check if username already exists
+    const existingUser = users.find(u => u.username === username);
+    if (existingUser) {
+        return res.status(400).json({ message: 'Username already taken' });
+    }
+
+    // Hash the password before storing it
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const userId = uuidv4(); // Generate a unique userId
+    users.push({ userId, username, password: hashedPassword });
     res.json({ userId });
 });
 
-app.post('/login', (req, res) => {
+// Login User
+app.post('/login', async (req, res) => {
     const { username, password } = req.body;
-    const user = users.find(u => u.username === username && u.password === password);
-    if (user) return res.json({ userId: user.userId });
-    res.status(401).json({ message: 'Invalid credentials' });
+
+    // Find the user
+    const user = users.find(u => u.username === username);
+    if (!user) {
+        return res.status(401).json({ message: 'Invalid credentials' });
+    }
+
+    // Compare hashed password
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+        return res.status(401).json({ message: 'Invalid credentials' });
+    }
+
+    res.json({ userId: user.userId });
 });
 
 app.get('/notes/:userId', (req, res) => {
@@ -35,7 +80,7 @@ app.get('/notes/:userId', (req, res) => {
 
 app.post('/notes', (req, res) => {
     const { userId, content } = req.body;
-    notes.push({ userId, content, id: Date.now().toString() });
+    notes.push({ userId, content, id: uuidv4() });
     res.status(201).json({ message: 'Note saved' });
 });
 
@@ -54,15 +99,8 @@ app.get('/passwords/:userId', (req, res) => {
 
 app.post('/passwords', (req, res) => {
     const { userId, label, password } = req.body;
-    passwords.push({ userId, label, password, id: Date.now().toString() });
+    passwords.push({ userId, label, password, id: uuidv4() });
     res.status(201).json({ message: 'Password saved' });
-});
-
-// Delete Note
-app.delete('/notes/:noteId', (req, res) => {
-    const { noteId } = req.params;
-    notes = notes.filter(note => note.id !== noteId);
-    res.status(200).json({ message: 'Note deleted' });
 });
 
 // Delete Password
