@@ -2,9 +2,6 @@
 
 NoteLock is a full-stack web application designed to provide users with a secure and private space to store their personal notes and manage passwords. With a clean and intuitive interface, users can easily register, log in, and manage their sensitive information with confidence.
 
-![NoteLock Screenshot](https://i.imgur.com/7bE9x0j.png)
-*(**Note:** To make this image work, replace the link above with a direct link to a screenshot of your project. You can upload one of your screenshots to your GitHub repository and use that link.)*
-
 ## Table of Contents
 
 - [Features](#features)
